@@ -1,0 +1,32 @@
+name: misaka-network.top
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'misaka-network.top/**'
+      - '.github/workflows/misaka-network.top.yaml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: 安装 EdgeOne CLI
+        run: npm install -g edgeone
+
+      - name: 部署到 EdgeOne Pages
+        run: edgeone pages deploy -n misaka-web -t ${{ secrets.EDGEONE_API_TOKEN }}
+        env:
+          EDGEONE_API_TOKEN: ${{ secrets.EDGEONE_API_TOKEN }}
+        working-directory: ./misaka-network.top

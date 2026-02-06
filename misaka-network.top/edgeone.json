@@ -1,0 +1,24 @@
+{
+    "name": "misaka-web",
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "outputDirectory": "./dist",
+    "redirects": [
+        {
+            "source": "$wwwhost",
+            "destination": "$host",
+            "statusCode": 301
+        }
+    ],
+    "headers": [
+        {
+            "source": "/*",
+            "headers": [
+                {
+                    "key": "X-Frame-Options",
+                    "value": "DENY"
+                }
+            ]
+        }
+    ]
+}
